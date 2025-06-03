@@ -8,10 +8,6 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+EXPOSE 3001
 
-RUN npm install -g serve
-
-EXPOSE 5000
-
-CMD ["serve", "-s", "build"]
+CMD ["npm", "start"]
