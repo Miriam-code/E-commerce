@@ -1,29 +1,38 @@
-# ✅ Version optimisée pour Railway
+# Étape 1: Build React avec mémoire allouée
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Install only needed files first (cache layer)
+COPY package*.json ./
+
+# Install all deps including dev (for build)
+RUN npm ci
+
+# Copy rest of app
+COPY . .
+
+# Augmenter la mémoire disponible pour Node.js pendant le build
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+ENV GENERATE_SOURCEMAP=false
+
+# Build production (React)
+RUN npm run build
+
+# Étape 2: Serveur ultra-léger avec serve
 FROM node:20-alpine
 
 WORKDIR /app
 
-# Copier les fichiers package
-COPY package*.json ./
-
-# Installer toutes les dépendances (dev + prod pour le build)
-RUN npm ci
-
-# Copier tout le code source
-COPY . .
-
-# Variables d'environnement pour optimiser le build
-ENV NODE_OPTIONS="--max-old-space-size=4096"
-ENV GENERATE_SOURCEMAP=false
-
-# Build de production (plus léger)
-RUN npm run build
-
-# Installer serve pour servir les fichiers statiques
+# Installer seulement serve
 RUN npm install -g serve
 
-# Railway utilise la variable PORT automatiquement
-EXPOSE $PORT
+# Copier uniquement le build
+COPY --from=builder /app/build ./build
 
-# ✅ Servir les fichiers buildés (pas le dev server)
-CMD ["sh", "-c", "serve -s build -p $PORT"]
+# Railway expose automatiquement la variable $PORT
+EXPOSE 8080
+ENV PORT 8080
+
+# Commande de démarrage
+CMD ["serve", "-s", "build", "-l", "8080"]
