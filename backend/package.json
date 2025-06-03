@@ -9,7 +9,8 @@
     "test:coverage": "jest --coverage",
     "test:full": "npm run db:setup:test && npm test",
     "db:setup:test": "node scripts/dbSetupTest.js",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "test:lint": "eslint ."
   },
   "author": "",
   "license": "ISC",
