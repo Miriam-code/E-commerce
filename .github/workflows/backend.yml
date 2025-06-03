@@ -1,0 +1,53 @@
+name: backend
+
+on: [pull_request]
+
+jobs:
+
+  lint:
+    if: contains(github.event.pull_request.labels.*.name, 'backend')
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+      - run: npm ci
+      - run: npm run lint
+
+  test:
+    if: contains(github.event.pull_request.labels.*.name, 'backend')
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      mysql:
+        image: mysql:8
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: watch_test
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    env:
+      DB_NAME: watch_test
+      DB_USER: root
+      DB_PASS: ''
+      DB_HOST: 127.0.0.1
+      NODE_ENV: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+      - run: npm ci
+      - run: cp .env.test .env
+      - run: npm test

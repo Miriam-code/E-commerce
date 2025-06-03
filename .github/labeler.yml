@@ -1,0 +1,31 @@
+package: 
+  - "package.json"
+  - "package-lock.json"
+  - "frontend/package.json"
+  - "frontend/package-lock.json"
+  - "backend/package.json"
+  - "backend/package-lock.json"
+
+github:
+  - ".github/**/*"
+
+readme:
+  - "README.md"
+
+docs:
+  - "docs/**/*"
+
+frontend:
+  - "frontend/**/*"
+
+backend:
+  - "backend/**/*"
+
+docker:
+  - "**/Dockerfile"
+  - "**/Dockerfile.prod"
+  - "compose-dev.yaml"
+
+env:
+  - "**/.env"
+  - "**/.env.*"

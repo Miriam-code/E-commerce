@@ -5,13 +5,12 @@ const server = express();
 const path = require('path');
 require('dotenv').config({ path: './config/.env' });
 
-// importer les routes
+// routes
 const routesUsers = require('./routes/usersRoutes');
 const routesProducts = require('./routes/productsRoutes');
 const routesOrders = require('./routes/ordersRoutes');
 const routesItems = require('./routes/ordersItems');
 
-//
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
@@ -114,8 +113,10 @@ server.use(
   })
 )
 
+if (require.main === module) {
+  server.listen(process.env.PORT, () => {
+    console.log(`écoute du port ${process.env.PORT}`);
+  });
+}
 
-
-server.listen(process.env.PORT, () => {
-    console.log(`écoute du port ${process.env.PORT}`)
-});
+module.exports = server; 

@@ -1,0 +1,16 @@
+{
+    "name": "npm-packages",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+      "lint": "eslint ../frontend ../backend --ext .js,.jsx,.ts,.tsx",
+      "commitlint": "commitlint --from=HEAD~1",
+      "prepare": "husky install"
+    },
+    "dependencies": {
+      "eslint": "9.23.0",
+      "@commitlint/cli": "19.7.1",
+      "@commitlint/config-conventional": "19.2.2",
+      "husky": "9.1.7"
+    }
+  }

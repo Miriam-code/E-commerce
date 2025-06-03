@@ -99,11 +99,11 @@ module.exports = {
     },
     getAll: async (req, res) => {
         try {
-            const authorization = req.headers['authorization'];
+            /*const authorization = req.headers['authorization'];
 
             if (!jwtUtils.adminUser(authorization)) {
                 return res.status(403).json({ message: "Vous n'êtes pas autorisé à accéder à cette ressource." });
-            }
+            }*/
 
             const orders = await models.Orders.findAll({
                 attributes: ['id', 'userId', 'status', 'createdAt'],
@@ -111,7 +111,7 @@ module.exports = {
                     {
                         model: models.OrderItems,
                         as: 'orderItems',
-                        attributes: ['productId', 'quantity'],
+                        attributes: ['orderId', 'quantity'],
                         include: [
                             {
                                 model: models.Products,

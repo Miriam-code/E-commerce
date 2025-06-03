@@ -1,3 +1,4 @@
+
 const express = require('express');
 const router = express.Router();
 const productsCtrl = require('../controllers/productsCtrl');
@@ -10,3 +11,4 @@ router.get('/get-all', productsCtrl.getAllProducts);
 router.get('/get-one/:id', productsCtrl.getOneProduct);
 
 module.exports = router;
+

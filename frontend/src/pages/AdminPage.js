@@ -24,24 +24,46 @@ import OrdersShow from '../components/Admin/Orders/OrdersShow';
 import OrdersItemsList from '../components/Admin/OrdersItems/OrdersItemsList';
 import OrdersItemsShow from '../components/Admin/OrdersItems/OrdersItemsShow';
 
-
 const AdminPage = () => {
-
-  const dataProvider = simpleRestProvider('http://localhost:3000/admin')
+  const dataProvider = simpleRestProvider('http://localhost:3000/admin');
 
   return (
-      <Admin
-          basename="/admin"
-          dataProvider={dataProvider}
-          authProvider={authProvider}
-          loginPage={AdminLoginPage}
-      >
-        <Resource name='users' options={{label: 'Users'}} list={UserList} edit={UserEdits} show={UserShow} create={UserCreate}/>
-        <Resource name='products' options={{label:'All Products'}} list={ProductList} edit={ProductEdits} show={ProductShow} create={ProductCreate}/>
-        <Resource name='orders' options={{label:'Orders'}} list={OrdersList} show={OrdersShow}/>
-        <Resource name='ordersItems' options={{label:'Orders Items'}} list={OrdersItemsList} show={OrdersItemsShow}/>
-      </Admin>
-  )
-}
+    <Admin
+      basename="/admin"
+      dataProvider={dataProvider}
+      authProvider={authProvider}
+      loginPage={AdminLoginPage}
+    >
+      <Resource
+        name="users"
+        options={{ label: 'Users' }}
+        list={UserList}
+        edit={UserEdits}
+        show={UserShow}
+        create={UserCreate}
+      />
+      <Resource
+        name="products"
+        options={{ label: 'All Products' }}
+        list={ProductList}
+        edit={ProductEdits}
+        show={ProductShow}
+        create={ProductCreate}
+      />
+      <Resource
+        name="orders"
+        options={{ label: 'Orders' }}
+        list={OrdersList}
+        show={OrdersShow}
+      />
+      <Resource
+        name="ordersItems"
+        options={{ label: 'Orders Items' }}
+        list={OrdersItemsList}
+        show={OrdersItemsShow}
+      />
+    </Admin>
+  );
+};
 
 export default AdminPage;

@@ -1,0 +1,28 @@
+name: Deploy to Railway
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g railway
+
+      - name: Login to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway login --token $RAILWAY_TOKEN
+
+      - name: Deploy backend image
+        run: |
+          railway up --service backend --image ghcr.io/${{ github.repository_owner }}/watch-backend:latest
+
+      - name: Deploy frontend image
+        run: |
+          railway up --service frontend --image ghcr.io/${{ github.repository_owner }}/watch-frontend:latest

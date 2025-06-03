@@ -2,27 +2,26 @@ import React, { useState } from 'react';
 import AuthProvider from './AuthProvider';
 
 const AdminLoginPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState(null);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    AuthProvider.login({ email, password }).catch((error) => {
+      if (error.response.data.message) {
+        setError(
+          "Une erreur s'est produite lors de l'inscription : " +
+            error.response.data.message,
+        );
+      } else {
+        setError("Une erreur s'est produite lors de l'inscription.");
+      }
+    });
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        AuthProvider.login({ email, password })
-        .catch((error) => {
-          if (error.response.data.message) {
-            setError("Une erreur s'est produite lors de l'inscription : " + error.response.data.message);
-          } else {
-            setError("Une erreur s'est produite lors de l'inscription.");
-          }
-          
-        });
-    }
-
-    return (
-    
-    <div className='form-container'>
+  return (
+    <div className="form-container">
       <form className="form">
         <span className="label"> ADMIN LOGIN !</span>
         <input
@@ -51,8 +50,7 @@ const AdminLoginPage = () => {
         </button>
       </form>
     </div>
-           
-    );
-}
+  );
+};
 
 export default AdminLoginPage;

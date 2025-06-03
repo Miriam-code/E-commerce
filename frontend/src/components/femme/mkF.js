@@ -6,7 +6,6 @@ import Modal from '../modal';
 import Footer from '../footer';
 
 function MkF() {
-
   const [products, setProducts] = useState([]);
   const [openProductModals, setOpenProductModals] = useState({});
 
@@ -14,7 +13,7 @@ function MkF() {
     getProducts()
       .then((allProducts) => {
         const filteredProducts = allProducts.filter(
-          (product) => product.genre === 'femme' && product.marque === 'mk'
+          (product) => product.genre === 'femme' && product.marque === 'mk',
         );
         setProducts(filteredProducts);
       })
@@ -46,31 +45,34 @@ function MkF() {
       </div>
 
       <section>
-        {products && products.length > 0 ? (
+        {products && products.length > 0
+          ? products.map((product) => {
+              const isModalOpen = openProductModals[product.id] || false;
 
-          products.map((product) => {
-
-            const isModalOpen = openProductModals[product.id] || false;
-
-            return (
-
-              <div className='cardprod' key={product.id}>
-                <img
-                  src={`${env.API_URL}/public/upload/products/${product.image}`}
-                  alt='productIMG'
-                />
-                <div className='cardcontent'>
-                  <h3>{product.name}</h3>
-                  <p>{product.prix}€</p>
+              return (
+                <div className="cardprod" key={product.id}>
+                  <img
+                    src={`${env.API_URL}/public/upload/products/${product.image}`}
+                    alt="productIMG"
+                  />
+                  <div className="cardcontent">
+                    <h3>{product.name}</h3>
+                    <p>{product.prix}€</p>
+                  </div>
+                  <button onClick={() => handleOpenModal(product.id)}>
+                    Voir détails
+                  </button>
+                  <Modal
+                    open={isModalOpen}
+                    onClose={() => handleCloseModal(product.id)}
+                    product={product}
+                  ></Modal>
                 </div>
-                <button onClick={() => handleOpenModal(product.id)}>Voir détails</button>
-                <Modal open={isModalOpen} onClose={() => handleCloseModal(product.id)} product={product}></Modal>
-              </div>
-            );
-          })
-        ) : null}
+              );
+            })
+          : null}
       </section>
-      <Footer/>
+      <Footer />
     </>
   );
 }

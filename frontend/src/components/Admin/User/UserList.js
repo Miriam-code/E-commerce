@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   List,
   Datagrid,
@@ -11,7 +11,7 @@ import {
   DateField,
 } from 'react-admin';
 
-const UserFilter = props => (
+const UserFilter = (props) => (
   <Filter {...props}>
     <SearchInput source="email" />
     <SearchInput source="nom" />
@@ -19,23 +19,22 @@ const UserFilter = props => (
   </Filter>
 );
 
-const UserList = (props) => {  
+const UserList = (props) => {
   return (
-    
-    <List {... props} filters={<UserFilter />} >
+    <List {...props} filters={<UserFilter />}>
       <Datagrid rowClick="show">
-        <TextField source='id' />
-        <TextField source='prenom' />
-        <TextField source='nom' />
-        <TextField source='is_admin' />
-        <EmailField source='email' />
+        <TextField source="id" />
+        <TextField source="prenom" />
+        <TextField source="nom" />
+        <TextField source="is_admin" />
+        <EmailField source="email" />
         <DateField source="createdAt" />
         <DateField source="updatedAt" />
-        <EditButton basepath='users'/>
-        <DeleteButton basepath='users'/>
+        <EditButton basepath="users" />
+        <DeleteButton basepath="users" />
       </Datagrid>
     </List>
-  )
-}
+  );
+};
 
 export default UserList;

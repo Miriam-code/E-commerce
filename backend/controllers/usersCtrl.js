@@ -45,16 +45,16 @@ module.exports = {
                     prenom: prenom,
                     password: hash,
                     email: email,
-                    is_admin: 1
+                    is_admin: 0
                 });
                   
                 if (newUser) {
 
-                return res.status(200).json({ message: "Utilisateur créé." });
+                return res.status(200).json({ message: "Utilisateur créé" });
                } else {
                 return res.status(500).json({ message: "Erreur serveur." });}
             });} else {
-            return res.status(500).json({ message: "Cet email existe déjà, veuillez-vous connecter." });}
+            return res.status(400).json({ message: "Cet email existe déjà, veuillez-vous connecter." });}
 
         } catch (error) {
         return res.status(500).json({ message: "Erreur serveur." });}
@@ -72,7 +72,6 @@ module.exports = {
         if (!validator.isEmail(email)) {
             return res.status(400).json({ message: "invalid email" })
         }
-
         const user = await models.Users.findOne({ where: { email: email } });
 
         if (user) {
@@ -105,6 +104,10 @@ module.exports = {
         }
     
         const user = await models.Users.findOne({ where: { id } });
+
+        if  (id !== user.id || user.is_admin) {
+            return res.status(403).json({ message: 'Accès interdit' });
+        }
     
         // Mettre à jour le mot de passe uniquement s'il est fourni et valide
         if (password) {
@@ -137,6 +140,10 @@ module.exports = {
         const id = req.params.id;
 
         const user = await models.Users.findOne({ where: { id: id } });
+
+        if  (id !== user.id || user.is_admin) {
+            return res.status(403).json({ message: 'Accès interdit' });
+        } 
         if (user) {
             await models.Users.destroy({
                 where: { id: id }
@@ -148,6 +155,11 @@ module.exports = {
         }
     },
     getAllUsers: async (req, res) => {
+
+        if (req.params.is_admin === 1 ) {
+            return res.status(403).json({ message: 'Accès interdit' });
+        } 
+
         await models.Users.findAll()
             .then((users) => {
                 return res.status(200).json({ users: users })
@@ -162,7 +174,7 @@ module.exports = {
         const userId = jwtUtils.getUser(authorization); 
 
         if(userId == null || userId == -1) {
-            return res.status(400).json({ message: "Aucun utilisateur" });
+            return res.status(401).json({ message: "Aucun utilisateur" });
         }
 
         await models.Users.findOne({where: {id: userId}})

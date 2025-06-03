@@ -1,0 +1,20 @@
+FROM node:20
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm install
+
+COPY prisma ./prisma
+
+RUN npx prisma generate
+
+ENV DATABASE_URL=mysql://root@mysql:3306/dhm_prod
+
+RUN npx prisma migrate deploy --preview-feature
+
+
+COPY . .
+
+CMD ["npm", "run", "start:prod"]

@@ -17,12 +17,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Orders.init({
-    userId: DataTypes.NUMBER,
-    total: DataTypes.NUMBER,
+    userId: DataTypes.INTEGER,
+    total: DataTypes.TEXT,
     status: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Orders',
+    tableName: 'orders',
   });
   return Orders;
 };
