@@ -18,7 +18,7 @@ jobs:
       - name: Login to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway login --token $RAILWAY_TOKEN
+        run: railway auth
 
       - name: Deploy backend image
         run: |
