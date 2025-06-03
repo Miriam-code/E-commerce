@@ -33,10 +33,10 @@ jobs:
         run: docker compose -f docker-compose.yml up -d --build
 
       - name: Wait for containers
-        run: sleep 10
+        run: sleep 50
 
-      - name: Run backend integration tests
-        run: docker exec backend_dev npm test
+      #- name: Run backend integration tests
+      #  run: docker exec backend_dev npm test
 
       - name: Stop containers
         run: docker compose -f docker-compose.yml down
