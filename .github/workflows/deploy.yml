@@ -15,15 +15,19 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Login to Railway
+      - name: Set Railway Token
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway login --token $RAILWAY_TOKEN
+        run: echo "Railway token is set"
 
       - name: Deploy backend image
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           railway up --service backend --image ghcr.io/${{ github.repository_owner }}/watch-backend:latest
 
       - name: Deploy frontend image
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           railway up --service frontend --image ghcr.io/${{ github.repository_owner }}/watch-frontend:latest
