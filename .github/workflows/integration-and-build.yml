@@ -1,4 +1,4 @@
-name: Integration and Build
+name: Intégration et Build
 
 on:
   push:
@@ -44,7 +44,8 @@ jobs:
   build-push:
     needs: integration-test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    # Construire et pousser seulement sur push vers main/master (pas sur les PRs)
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     permissions:
       contents: read
       packages: write
@@ -54,13 +55,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Log in to GitHub Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: ./${{ matrix.component }}
           file: ./${{ matrix.component }}/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/watch-${{ matrix.component }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
