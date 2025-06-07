@@ -76,7 +76,7 @@ Ce document décrit le pipeline CI/CD utilisé pour le projet **Watch**. Il s'ap
 
 ---
 
-## 📁 Structure des workflows
+##  Structure des workflows
 
 | Fichier                             | Fonction                                                 |
 |-------------------------------------|----------------------------------------------------------|
@@ -89,7 +89,7 @@ Ce document décrit le pipeline CI/CD utilisé pour le projet **Watch**. Il s'ap
 
 ---
 
-## 🧪 Étapes CI (intégration continue)
+##  Étapes CI (intégration continue)
 
 ### 🔹 Pull Request ouverte
 
@@ -105,7 +105,7 @@ Ce document décrit le pipeline CI/CD utilisé pour le projet **Watch**. Il s'ap
 
 ---
 
-## ⚙️ Étapes CD (déploiement continu)
+##  Étapes CD (déploiement continu)
 
 ### 🔹 Push sur `main`
 
@@ -134,7 +134,7 @@ Ce document décrit le pipeline CI/CD utilisé pour le projet **Watch**. Il s'ap
 
 ---
 
-## 🔐 Secrets requis
+##  Secrets requis
 
 | Nom              | Utilisation                  |
 |------------------|------------------------------|
@@ -143,7 +143,7 @@ Ce document décrit le pipeline CI/CD utilisé pour le projet **Watch**. Il s'ap
 
 ---
 
-## 📝 Exemple de flux
+##  Exemple de flux
 
 ```mermaid
 graph TD
