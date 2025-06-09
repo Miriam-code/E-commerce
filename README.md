@@ -70,7 +70,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 
-# 🚀 CI/CD Pipeline – GitHub Actions + Docker + Railway
+# CI/CD Pipeline – GitHub Actions + Docker + Railway
 
 Ce document décrit le pipeline CI/CD utilisé pour le projet **Watch**. Il s'appuie sur GitHub Actions pour automatiser lint, tests, build des images Docker, push vers GitHub Container Registry, et déploiement sur Railway.
 
@@ -126,7 +126,7 @@ Ce document décrit le pipeline CI/CD utilisé pour le projet **Watch**. Il s'ap
 
 ---
 
-## 🐳 Docker – Organisation
+##  Docker – Organisation
 
 - Un seul `docker-compose.yml` pour l’environnement de développement.
 - Chaque service (`backend`, `frontend`) a son propre `Dockerfile`.
